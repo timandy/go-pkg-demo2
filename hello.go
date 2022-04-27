@@ -2,7 +2,7 @@ package go_pkg_demo
 
 import "fmt"
 
-func PrintInfo(value interface{}) interface{} {
+func PrintInfo[T any](value T) T {
 	fmt.Println(value)
 	return value
 }
