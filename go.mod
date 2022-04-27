@@ -1,4 +1,4 @@
-module github.com/timandy/go-pkg-demo
+module github.com/timandy/go-pkg-demo2
 
 go 1.18
 
