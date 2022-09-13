@@ -42,6 +42,7 @@ jobs:
           GOOS: ${{ matrix.os }}
           GOARCH: ${{ matrix.arch }}
         run: |
+          echo $GOROOT
           PATH=$PATH:`go env|grep GOROOT| awk -F '=' '{print $2}'|awk -F '"' '{print $2}'`/misc/wasm
           echo $PATH
           a=a:`go env|grep GOROOT| awk -F '=' '{print $2}'|awk -F '"' '{print $2}'`/misc/wasm
