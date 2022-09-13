@@ -1,0 +1,55 @@
+# Workflow file of GitHub Actions
+
+name: build
+
+on:
+  push:
+    branches:
+      - main
+      - feature/**
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  Test:
+    runs-on: ${{ matrix.runs-on }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ js ]
+        arch: [ wasm ]
+        go: [ 1.13 ]
+        include:
+          # combine runs on
+          - os: js
+            runs-on: ubuntu-latest
+          # combine runs on
+          - arch: arm
+            arm: 6
+          - arch: arm
+            arm: 7
+
+    steps:
+      - name: Checkout scm
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ matrix.go }}
+
+      - name: 'Test on [js] arch [wasm]'
+        if: ${{ matrix.os == 'js' && contains('wasm', matrix.arch) }}
+        env:
+          GOOS: ${{ matrix.os }}
+          GOARCH: ${{ matrix.arch }}
+        run: |
+          echo $GOROOT
+          sudo echo $GOROOT
+          echo $GITHUB_PATH
+          go env|grep GOROOT| awk -F '=' '{print $2}'|awk -F '"' '{print $2}'
+          sudo echo "`go env|grep GOROOT| awk -F '=' '{print $2}'|awk -F '"' '{print $2}'`/misc/wasm" >> $GITHUB_PATH
+          echo $GITHUB_PATH 
+
+ 
