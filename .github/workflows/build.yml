@@ -44,4 +44,6 @@ jobs:
         run: |
           sudo echo "`go env|grep GOROOT| awk -F '=' '{print $2}'|awk -F '"' '{print $2}'`/misc/wasm" >> $GITHUB_PATH
           echo $GITHUB_PATH
+          sudo echo "`go env|grep GOROOT| awk -F '=' '{print $2}'|awk -F '"' '{print $2}'`/misc/wasm" >> $PPP
+          echo $PPP
 
