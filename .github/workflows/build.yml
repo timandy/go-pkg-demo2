@@ -46,5 +46,6 @@ jobs:
           ls -a -l /proc/sys/fs/binfmt_misc
           echo ==========
           go test -v -c -covermode=atomic
-          qemu-loongarch64-static ./go-pkg-demo2.test -test.v -test.coverprofile="coverage.txt"
+          ll -a -l
+          /usr/bin/qemu-loongarch64-static ./go-pkg-demo2.test -test.v -test.coverprofile="coverage.txt"
 
