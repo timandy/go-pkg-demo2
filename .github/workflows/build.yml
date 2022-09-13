@@ -39,7 +39,7 @@ jobs:
           GOARM: ${{ matrix.arch[3] }}
         run: |
           sudo apt-get -y install qemu-user-static
-          wget -o /usr/bin/qemu-loongarch64-static https://github.com/loongson/build-tools/releases/download/2022.09.06/qemu-loongarch64
+          sudo wget -o /usr/bin/qemu-loongarch64-static https://github.com/loongson/build-tools/releases/download/2022.09.06/qemu-loongarch64
           chmod +x /usr/bin/qemu-loongarch64-static
           ls /proc/sys/fs/binfmt_misc -a -l
           /usr/bin/qemu-loongarch64-static echo 1
