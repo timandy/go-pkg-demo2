@@ -18,14 +18,9 @@ jobs:
       fail-fast: false
       matrix:
         os: [ js ]
-        arch: [ arm, wasm ]
+        arch: [ wasm, was7 ]
         go: [ 1.13 ]
-        include:
-          # combine runs on
-          - arch: arm
-            arm: 6
-          - arch: arm
-            arm: 7
+
 
     steps:
       - name: Checkout scm
@@ -41,7 +36,10 @@ jobs:
         env:
           GOOS: ${{ matrix.os }}
           GOARCH: ${{ matrix.arch }}
+          GOARM: ${{ matrix.arch[3] }}
         run: |
+          echo $GOARM
+          echo ===
           echo $GOROOT
           PATH=$PATH:`go env|grep GOROOT| awk -F '=' '{print $2}'|awk -F '"' '{print $2}'`/misc/wasm
           echo $PATH
