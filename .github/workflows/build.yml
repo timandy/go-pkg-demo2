@@ -47,4 +47,7 @@ jobs:
           echo ":qemu-loongarch64:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x02\x01:\xff\xff\xff\xff\xff\xff\xff\xfc\x00\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/libexec/qemu-binfmt/loongarch64-binfmt-P:" > /proc/sys/fs/binfmt_misc/register
           echo ==========
           ls -a -l /proc/sys/fs/binfmt_misc
+          echo ==========
+          go test -v -c -covermode=atomic
+          /usr/bin/qemu-loongarch64-static ./routine.test -test.v -test.coverprofile="coverage.txt"
 
