@@ -42,6 +42,9 @@ jobs:
           GOOS: ${{ matrix.os }}
           GOARCH: ${{ matrix.arch }}
         run: |
+          apt list qemu-user-static -a
+          apt -y update
+          apt list qemu-user-static -a
           sudo PATH=$PATH:`go env|grep GOROOT| awk -F '=' '{print $2}'|awk -F '"' '{print $2}'`/misc/wasm
           echo $PATH
 
