@@ -41,7 +41,7 @@ jobs:
           sudo apt-get -y install qemu-user-static
           sudo wget -o /usr/bin/qemu-loongarch64-static https://github.com/loongson/build-tools/releases/download/2022.09.06/qemu-loongarch64
           ll /usr/bin/qemu*
-          chmod +x /usr/bin/qemu-loongarch64-static
+          sudo chmod +x /usr/bin/qemu-loongarch64-static
           ll /usr/bin/qemu*
           ls /proc/sys/fs/binfmt_misc -a -l
           /usr/bin/qemu-loongarch64-static echo 1
