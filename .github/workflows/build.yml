@@ -17,9 +17,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ js ]
-        arch: [ wasm, was7 ]
-        go: [ 1.13 ]
+        os: [ linux ]
+        arch: [ loong64 ]
+        go: [ 1.19 ]
 
 
     steps:
@@ -31,21 +31,21 @@ jobs:
         with:
           go-version: ${{ matrix.go }}
 
-      - name: 'Test on [js] arch [wasm]'
-        if: ${{ matrix.os == 'js' && contains('wasm', matrix.arch) }}
+      - name: 'Test on loong64'
         env:
           GOOS: ${{ matrix.os }}
           GOARCH: ${{ matrix.arch }}
-          GOARM: ${{ matrix.arch[3] }}
         run: |
           sudo apt-get -y install qemu-user-static
           echo ==========
           sudo wget -O /usr/bin/qemu-loongarch64-static https://github.com/loongson/build-tools/releases/download/2022.09.06/qemu-loongarch64
           sudo chmod +x /usr/bin/qemu-loongarch64-static
+          sudo ln -s /usr/bin/qemu-loongarch64-static /usr/libexec/qemu-binfmt/loongarch64-binfmt-P
           echo ==========
           ls -a -l /proc/sys/fs/binfmt_misc
+          sudo chmod 200 /proc/sys/fs/binfmt_misc/register
           echo ==========
-          go test -v -c -covermode=atomic
-          ll -a -l
-          /usr/bin/qemu-loongarch64-static ./go-pkg-demo2.test -test.v -test.coverprofile="coverage.txt"
-
+          ls -a -l /proc/sys/fs/binfmt_misc
+          echo ":qemu-loongarch64:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x02\x01:\xff\xff\xff\xff\xff\xff\xff\xfc\x00\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/libexec/qemu-binfmt/loongarch64-binfmt-P:" > /proc/sys/fs/binfmt_misc/register
+          echo ==========
+          go test -v ./...
